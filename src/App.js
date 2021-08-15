@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import GithubServices from './services/GithubServices'
+import { Container } from './styled/Global'
+import Header from './components/Header'
+
 
 function App() {
+  const [user, setUser] = useState('')
+  const getRepositories = async () => {
+    const response = await GithubServices.getRepositories(user)
+    console.log(response.data)
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Header/>
+      <input value={user} onChange={(event) => setUser(event.target.value)} type="text" placeholder="usuario"/>
+      <button onClick={() => getRepositories()} type="button">Enviar</button>
+    </Container>
+
   );
 }
 
